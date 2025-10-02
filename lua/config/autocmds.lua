@@ -2,6 +2,7 @@
 -- TITLE : auto-commands
 -- ABOUT : automatically run code on defined events (e.g. save, yank)
 -- ================================================================================================
+local on_attach = require("utils.lsp").on_attach
 
 -- Restore last cursor position when reopening a file
 local last_cursor_group = vim.api.nvim_create_augroup("LastCursorGroup", {})
@@ -41,3 +42,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --         vim.lsp.buf.format({ name = "efm", async = true })
 --     end,
 -- })
+
+-- on attach function shortcuts
+local lsp_on_attach_group = vim.api.nvim_create_augroup("LspMappings", {})
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = lsp_on_attach_group,
+    callback = on_attach,
+})

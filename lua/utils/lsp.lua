@@ -1,6 +1,11 @@
 local M = {}
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+        return
+    end
+    local bufnr = event.buf
     local keymap = vim.keymap.set
     local opts = {
         noremap = true, -- prevent recursive mapping
@@ -40,7 +45,7 @@ M.on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>D", function() vim.diagnostic.open_float() end, opts) -- Cursor diagnostics
 
     -- Order Imports (if supported by the client LSP)
-    if client.supports_method("textDocument/codeAction") then
+    if client:supports_method("textDocument/codeAction", bufnr) then
         keymap("n", "<leader>oi", function()
             vim.lsp.buf.code_action({
                 context = {
