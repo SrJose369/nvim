@@ -5,7 +5,7 @@
 --   > github : https://github.com/mattn/efm-langserver
 --   > configs: https://github.com/creativenull/efmls-configs-nvim/tree/main
 -- ================================================================================================
---
+
 --- @param capabilities table LSP client capabilities (from nvim-cmp)
 --- @return nil
 return function(capabilities)
@@ -27,6 +27,7 @@ return function(capabilities)
     vim.lsp.config("efm", {
         capabilities = capabilities,
         filetypes = {
+			-- "bash",
             "c",
             "cpp",
             "css",

@@ -1,0 +1,16 @@
+{
+	"Console TS": {
+		"prefix": "cg",
+		"body": ["console.log('$1');"],
+		"description": "Log to console"
+	},
+	"For Loop TS": {
+		"prefix": "fi",
+		"body": [
+			"for (let i = 0; i < $1.length; i++) {",
+			"  const item: $2 = $1[i];",
+			"}"
+		],
+		"description": "Typed loop over array"
+	}
+}

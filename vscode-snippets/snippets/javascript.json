@@ -1,0 +1,17 @@
+{
+	"Console JS": {
+		"prefix": "cg",
+		"body": ["console.log('$1');"],
+		"description": "Log to console"
+	},
+	"For Loop JS": {
+		"prefix": "fi",
+		"body": [
+			"for (let i = 0; i < $1.length; i++) {",
+			"  const item = $1[i];",
+			"  $2",
+			"}"
+		],
+		"description": "Loop over array"
+	}
+}

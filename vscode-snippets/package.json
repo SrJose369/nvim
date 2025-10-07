@@ -1,0 +1,39 @@
+{
+	"name": "custom-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": "all",
+				"path": "./snippets/all.json"
+			},
+			{
+				"language": "lua",
+				"path": "./snippets/lua.json"
+			},
+			{
+				"language": "javascript",
+				"path": "./snippets/javascript.json"
+			},
+			{
+				"language": "typescript",
+				"path": "./snippets/typescript.json"
+			},
+			{
+				"language": "typescriptreact",
+				"path": "./snippets/ts-react.json"
+			},
+			{
+				"language": "java",
+				"path": "./snippets/java.json"
+			},
+			{
+				"language": "c",
+				"path": "./snippets/c.json"
+			},
+			{
+				"language": "cpp",
+				"path": "./snippets/cpp.json"
+			}
+		]
+	}
+}

@@ -26,18 +26,18 @@ M.on_attach = function(event)
     vim.keymap.set("n", "<leader>gr", "<cmd>FzfLua lsp_references<CR>", opts) -- Show all references to the symbol under the cursor
     vim.keymap.set("n", "<leader>gt", "<cmd>FzfLua lsp_typedefs<CR>", opts) -- Jump to the type definition of the symbol under the cursor
     vim.keymap.set("n", "<leader>ds", "<cmd>FzfLua lsp_document_symbols<CR>", opts) -- List all symbols (functions, classes, etc.) in the current file
-    vim.keymap.set("n", "<leader>ws", "<cmd>FzfLua lsp_workspace_symbols<CR>", opts) -- Search for any symbol across the entire project/workspace
+    vim.keymap.set("n", "<leader>us", "<cmd>FzfLua lsp_workspace_symbols<CR>", opts) -- Search for any symbol across the entire project/workspace
     vim.keymap.set("n", "<leader>gi", "<cmd>FzfLua lsp_implementations<CR>", opts) -- Go to implementation
 
     local opts2= {buffer = bufnr, remap = false}
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts2)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts2)
-    vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts2)
-    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts2)
+    vim.keymap.set("n", "<leader>uws", function() vim.lsp.buf.workspace_symbol() end, opts2)
+    vim.keymap.set("n", "<leader>ud", function() vim.diagnostic.open_float() end, opts2)
     vim.keymap.set("n", "gn", function() vim.diagnostic.goto_next() end, opts2)
     vim.keymap.set("n", "gp", function() vim.diagnostic.goto_prev() end, opts2)
-    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts2)
+    vim.keymap.set("n", "<leader>ja", function() vim.lsp.buf.code_action() end, opts2)
     vim.keymap.set("n", "gu", function() vim.lsp.buf.references() end, opts2)
     vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts2)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts2)

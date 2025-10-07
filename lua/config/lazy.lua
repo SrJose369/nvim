@@ -30,6 +30,7 @@ require("config.globals")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
+-- vim.cmd("luafile ~/.config/nvim/lua/config/shorcuts.lua")
 
 local plugins_dir = "plugins"
 

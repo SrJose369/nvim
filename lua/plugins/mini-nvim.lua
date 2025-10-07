@@ -35,8 +35,8 @@ return {
                 },
                 mappings = {
                     comment = "gc",
-                    comment_line = "gcc",
-                    comment_visual = "gc",
+                    comment_line = "<leader>c",
+                    comment_visual = "<leader>c",
                     textobject = "gc",
                 },
                 hooks = {

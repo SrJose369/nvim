@@ -9,13 +9,13 @@ require("servers.ts_ls")(capabilities)
 require("servers.bashls")(capabilities)
 require("servers.clangd")(capabilities)
 require("servers.dockerls")(capabilities)
-require("servers.emmet_ls")(capabilities)
+-- require("servers.emmet_ls")(capabilities)
 require("servers.yamlls")(capabilities)
 require("servers.tailwindcss")(capabilities)
 require("servers.solidity_ls_nomicfoundation")(capabilities)
 
 -- Linters & Formatters
-require("servers.efm-langserver")(capabilities)
+-- require("servers.efm-langserver")(capabilities)
 vim.lsp.enable({
     'lua_ls',
     'pyright',
@@ -29,5 +29,5 @@ vim.lsp.enable({
     'yamlls',
     'tailwindcss',
     'solidity_ls_nomicfoundation',
-    'efm',
+    -- 'efm',
 })

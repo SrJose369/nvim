@@ -6,6 +6,15 @@
 -- ================================================================================================
 
 return {
-    "lewis6991/gitsigns.nvim",
-    opts = {},
+	"lewis6991/gitsigns.nvim",
+	opts = {},
+	config = function()
+		require("gitsigns").setup({
+			signcolunn = true,
+			numhl = false,
+			linehl = false,
+			word_diff = false,
+		})
+		vim.opt.foldcolumn = "0"
+	end,
 }

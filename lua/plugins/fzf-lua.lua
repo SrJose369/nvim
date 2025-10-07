@@ -25,7 +25,7 @@ return {
             desc = "FZF Live Grep",
         },
         {
-            "<leader>fG",
+            "<leader>rg",
             ":FzfLua live_grep resume=true<CR>",
             desc = "FZF Live Grep resume",
         },
@@ -78,6 +78,13 @@ return {
             end,
             desc = "FZF Workspace Symbols",
         },
+        {
+            "<leader>k",
+            function()
+                require("fzf-lua").keymaps()
+            end,
+            desc = "Fzf Keymaps",
+        }
     },
 
     opts = {},
