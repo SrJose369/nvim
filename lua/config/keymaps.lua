@@ -62,15 +62,20 @@ vim.keymap.set("n", "<C-u>", "u", { desc = "Redo" })
 
 vim.keymap.set("n", "<leader>h", "<Cmd>nohlsearch<CR>", { desc = "Toggle search highlight" })
 
+-- vim.keymap.set("n", "<leader>na", "<cmd>Noice all<CR>", {desc = "Noice Last Message" })
 vim.keymap.set("n", "<leader>nl", "<cmd>Noice last<CR>", {desc = "Noice Last Message" })
-vim.keymap.set("n", "<leader>nh", "<cmd>Noice history<CR>", {desc = "Noice History" })
+vim.keymap.set("n", "<leader>nh", "<cmd>Noice all<CR>", {desc = "Noice History" })
 vim.keymap.set("n", "<leader>nf", "<cmd>Noice fzf<CR>", {desc = "Noice Fzf" })
 vim.keymap.set("n", "<leader>nd", "<cmd>Noice dismiss<CR>", {desc = "Noice Dismiss" })
 vim.keymap.set("n", "<leader>nc", "<cmd>Noice cmdline<CR>", {desc = "Noice Commandline" })
 
 vim.keymap.set({"n", "v"}, "<leader>dd", '"_dd', { desc = "Delete line (no yank)" })
 
-vim.keymap.set('n', '<leader>fp', ':ProjectFzf<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('n', '<leader>fp', ':ProjectFzf<CR>', { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>la", function() print(vim.fn.expand("%:p")) end, { desc = "Show full path of current file" })
+vim.keymap.set("n", "<leader>lr", function() print(vim.fn.expand("%")) end, { desc = "Show relative path of current file" })
+
 
 vim.keymap.set("n", "<leader>m", function()
 	local api = require("nvim-tree.api")
@@ -105,75 +110,104 @@ vim.keymap.set("n", "<A-o>", function()
 	vim.cmd("bdelete " .. bufnr)
 end, { desc = "Close buffer and return to previous" })
 
+local buf_history, idx = {}, 0
+local max_history = 50
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		local b = vim.fn.bufname("%")
+		if b ~= "" and buf_history[#buf_history] ~= b then
+			table.insert(buf_history, b)
+			-- Trim if over limit
+			if #buf_history > max_history then
+				table.remove(buf_history, 1)
+			end
+			idx = #buf_history
+		end
+	end,
+})
+vim.keymap.set("n", "S-h", function()
+	if idx > 1 then
+		idx = idx - 1
+		vim.cmd("edit " .. buf_history[idx])
+	end
+end, { desc = "Back in buffer history" })
+vim.keymap.set("n", "S-l", function()
+	if idx < #buf_history then
+		idx = idx + 1
+		vim.cmd("edit " .. buf_history[idx])
+	end
+	end, { desc = "Forward in buffer history" })
+
+
 vim.keymap.set("n", "gh", function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local line = vim.fn.line('.') - 1
-  local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
+	local bufnr = vim.api.nvim_get_current_buf()
+	local line = vim.fn.line('.') - 1
+	local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
 
-  local contents = {}
+	local contents = {}
 
-  -- Build diagnostic lines: icon + code: + message
-  for _, d in ipairs(diagnostics) do
-    local icon = ""
-    if d.severity == vim.diagnostic.severity.ERROR then
-      icon = " "
-    elseif d.severity == vim.diagnostic.severity.WARN then
-      icon = " "
-    elseif d.severity == vim.diagnostic.severity.INFO then
-      icon = " "
-    elseif d.severity == vim.diagnostic.severity.HINT then
-      icon = "󰌵 "
-    end
+	-- Build diagnostic lines: icon + code: + message
+	for _, d in ipairs(diagnostics) do
+		local icon = ""
+		if d.severity == vim.diagnostic.severity.ERROR then
+			icon = " "
+		elseif d.severity == vim.diagnostic.severity.WARN then
+			icon = " "
+		elseif d.severity == vim.diagnostic.severity.INFO then
+			icon = " "
+		elseif d.severity == vim.diagnostic.severity.HINT then
+			icon = "󰌵 "
+		end
 
-    local tag = d.code or d.source
-    local label = tag and (tag .. ": ") or ""
+		local tag = d.code or d.source
+		local label = tag and (tag .. ": ") or ""
 
-    table.insert(contents, icon .. label .. d.message)
-  end
+		table.insert(contents, icon .. label .. d.message)
+	end
 
-  -- Request hover info
-  local params = vim.lsp.util.make_position_params()
-  vim.lsp.buf_request(bufnr, "textDocument/hover", params, function(err, result, ctx, _)
-    if err then return end
+	-- Request hover info
+	local params = vim.lsp.util.make_position_params()
+	vim.lsp.buf_request(bufnr, "textDocument/hover", params, function(err, result, ctx, _)
+		if err then return end
 
-    if result and result.contents then
-      local hover_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-      hover_lines = vim.lsp.util.trim_empty_lines(hover_lines)
-      if not vim.tbl_isempty(hover_lines) then
-        if #contents > 0 then
-          table.insert(contents, "")
-        end
-        vim.list_extend(contents, hover_lines)
-      end
-    end
+		if result and result.contents then
+			local hover_lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+			hover_lines = vim.lsp.util.trim_empty_lines(hover_lines)
+			if not vim.tbl_isempty(hover_lines) then
+				if #contents > 0 then
+					table.insert(contents, "")
+				end
+				vim.list_extend(contents, hover_lines)
+			end
+		end
 
-    if not vim.tbl_isempty(contents) then
-      local float_buf, _ = vim.lsp.util.open_floating_preview(contents, "markdown", { border = "rounded" })
+		if not vim.tbl_isempty(contents) then
+			local float_buf, _ = vim.lsp.util.open_floating_preview(contents, "markdown", { border = "rounded" })
 
-      -- Highlight diagnostics lines
-      for i, d in ipairs(diagnostics) do
-        local hl = "Normal"
-        if d.severity == vim.diagnostic.severity.ERROR then
-          hl = "DiagnosticError"
-        elseif d.severity == vim.diagnostic.severity.WARN then
-          hl = "DiagnosticWarn"
-        elseif d.severity == vim.diagnostic.severity.INFO then
-          hl = "DiagnosticInfo"
-        elseif d.severity == vim.diagnostic.severity.HINT then
-          hl = "DiagnosticHint"
-        end
-        vim.api.nvim_buf_add_highlight(float_buf, -1, hl, i - 1, 0, -1)
+			-- Highlight diagnostics lines
+			for i, d in ipairs(diagnostics) do
+				local hl = "Normal"
+				if d.severity == vim.diagnostic.severity.ERROR then
+					hl = "DiagnosticError"
+				elseif d.severity == vim.diagnostic.severity.WARN then
+					hl = "DiagnosticWarn"
+				elseif d.severity == vim.diagnostic.severity.INFO then
+					hl = "DiagnosticInfo"
+				elseif d.severity == vim.diagnostic.severity.HINT then
+					hl = "DiagnosticHint"
+				end
+				vim.api.nvim_buf_add_highlight(float_buf, -1, hl, i - 1, 0, -1)
 
-        -- Force the code: prefix to Normal (white)
-        if d.code or d.source then
-          local tag = (d.code or d.source) .. ":"
-          local line_text = vim.api.nvim_buf_get_lines(float_buf, i - 1, i, false)[1]
-          local start_col = line_text:find(tag, 1, true)
-          if start_col then
-            vim.api.nvim_buf_add_highlight(float_buf, -1, "Normal", i - 1, start_col - 1, start_col - 1 + #tag)
-          end
-        end
-      end
-    end
-  end)
+				-- Force the code: prefix to Normal (white)
+				if d.code or d.source then
+					local tag = (d.code or d.source) .. ":"
+					local line_text = vim.api.nvim_buf_get_lines(float_buf, i - 1, i, false)[1]
+					local start_col = line_text:find(tag, 1, true)
+					if start_col then
+						vim.api.nvim_buf_add_highlight(float_buf, -1, "Normal", i - 1, start_col - 1, start_col - 1 + #tag)
+					end
+				end
+			end
+		end
+	end)
 end, { desc = "JetBrains-style hover with icon + code: + message" })

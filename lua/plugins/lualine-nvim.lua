@@ -28,17 +28,20 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	extensions = { "nvim-tree", "fugitive", "quickfix", "lazy" },
 	config = function()
-		local auto_theme_custom = require('lualine.themes.auto')
-		auto_theme_custom.normal.c.bg = 'none'
-		auto_theme_custom.insert.c.bg = 'none'
-		auto_theme_custom.visual.c.bg = 'none'
-		auto_theme_custom.command.c.bg = 'none'
-		auto_theme_custom.terminal.c.bg = 'none'
+		local ok, theme = pcall(require, "lualine.themes.carbonfox")
+		if theme and theme.normal and theme.normal.c then
+			theme.normal.c.bg = 'none'
+		elseif (theme and theme.insert and theme.insert.c) then
+			theme.insert.c.bg = 'none'
+		elseif (theme and theme.command and theme.command.c) then
+			theme.command.c.bg = 'none'
+		elseif (theme and theme.terminal and theme.terminal.c) then
+			theme.terminal.c.bg = 'none'
+		else theme = "nightfox"
+		end
 		require("lualine").setup({
 			options = {
-				-- theme = "tokyonight-night",
-				-- theme = "melange",
-				theme = auto_theme_custom,
+				theme = theme,
 				icons_enabled = true,
 				section_separators = { left = "", right = "" },
 				component_separators = "|",
@@ -48,15 +51,11 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "diff" },
-				lualine_c = { { fun }, {
+				lualine_c = {  fun, {
 					"filename",
-					path = 1,
-					-- color = { bg = "none" }
+					path = 0,
 				} },
-				lualine_x = { {
-					"diagnostics",
-					-- color = { bg = "none" }
-				} },
+				lualine_x = {  "diagnostics" },
 				lualine_y = { "encoding", "fileformat", "filetype" },
 				lualine_z = { "location" },
 			},
