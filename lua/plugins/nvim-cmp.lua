@@ -30,12 +30,18 @@ return {
 		local lspkind = require("lspkind")
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-
 		require("luasnip.loaders.from_vscode").lazy_load()
 		require("luasnip.loaders.from_lua").lazy_load({
 			include = { "all" },
 			paths = "~/.config/nvim/lua/snippets",
 		})
+		-- los colores aca no importna, porque los voy a sobreescribir al inicio lazy.lua para hacerlos transparentes
+		-- CmpPmenuSel si se usan los valores, porque no se remueve el bg
+		vim.api.nvim_set_hl(0, "CmpPmenu",      { bg = "#ff00ff"})
+		vim.api.nvim_set_hl(0, "CmpPmenuSel",   { bg = "#3e4452", fg = "NONE", bold = true })
+		vim.api.nvim_set_hl(0, "CmpPmenuBorder",{ bg = "NONE", fg = "#5c6370" })
+		vim.api.nvim_set_hl(0, "CmpDoc",        { bg = "#0f0ff0" })
+		vim.api.nvim_set_hl(0, "CmpDocBorder",  { bg = "NONE", fg = "#5c6370" })
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = cmp.config.sources({
@@ -49,36 +55,30 @@ return {
 					},
 				}),
 		})
-		-- vim.api.nvim_create_autocmd("ColorScheme", {
-		-- 	callback = function()
-		-- 		vim.api.nvim_set_hl(0, "Pmenu",       { bg = "None", fg = "green" })
-		-- 		vim.api.nvim_set_hl(0, "PmenuSel",    { bg = "None", fg = "pink"})
-		-- 		vim.api.nvim_set_hl(0, "PmenuBorder", { bg = "None", fg = "pink" })
-		-- 		vim.api.nvim_set_hl(0, "DocBorder",   { bg = "None", fg = "yellow" })
-		-- 	end
-		-- })
 		cmp.setup({
-			-- window = {
-			-- 	completion = cmp.config.window.bordered({
-			-- 		winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
-			-- 	}),
-			-- 	documentation = cmp.config.window.bordered({
-			-- 		winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-			-- 	}),
-			-- },
+			preselect = cmp.PreselectMode.Item,
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
 				end,
 			},
-
+			window = {
+				completion = cmp.config.window.bordered({
+					border = "rounded",
+					winhighlight = "Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:CmpPmenuSel,Search:None",
+					scrollbar = false,
+				}),
+				documentation = cmp.config.window.bordered({
+					border = "rounded",
+					winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
+				}),
+			},
 			formatting = {
 				format = lspkind.cmp_format({
 					before = require("tailwind-tools.cmp").lspkind_format,
 					mode = "symbol_text",
 					menu = {
 						copilot = "",
-						-- codeium = "",
 						luasnip = "",
 						buffer = "",
 						path = "",
@@ -86,16 +86,6 @@ return {
 					},
 				}),
 			},
-
-			vim.keymap.set({"i"}, "<C-K>", function() luasnip.expand() end, {silent = true}),
-			vim.keymap.set({"i", "s"}, "<Tab>", function() luasnip.jump( 1) end, {silent = true}),
-			vim.keymap.set({"i", "s"}, "<S-Tab>", function() luasnip.jump(-1) end, {silent = true}),
-			vim.keymap.set({"i", "s"}, "<C-E>", function()
-				if luasnip.choice_active() then
-					luasnip.change_choice(1)
-				end
-			end, {silent = true}),
-
 			mapping = cmp.mapping.preset.insert({
 				["<C-k>"] = cmp.mapping.select_prev_item(),
 				["<C-j>"] = cmp.mapping.select_next_item(),
@@ -104,6 +94,13 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-e>"] = cmp.mapping.abort(),
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
+				-- ["<Tab>"] = cmp.mapping(function(fallback)
+				-- 	if cmp.visible() then
+				-- 		cmp.confirm({ select = true })  -- confirms first item if none selected
+				-- 	else
+				-- 		fallback()
+				-- 	end
+				-- end, { "i", "s" }),
 				-- ["<Tab>"] = cmp.mapping(function(fallback)
 				-- 	if cmp.visible() then
 				-- 		cmp.select_next_item()
@@ -123,7 +120,6 @@ return {
 				-- 	end
 				-- end, { "i", "s" }),
 			}),
-
 			sources = {
 				{ name = "copilot" },
 				{ name = "luasnip" },

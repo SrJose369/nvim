@@ -44,13 +44,13 @@ return {
 		-- require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = {
-				"bash_ls",
+				"bashls",
 				"ts_ls",
 				-- "eslint",
 				"lua_ls",
 			},
 		})
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		-- ESLint LSP for diagnostics + code actions
 		-- vim.lsp.config("eslint", {

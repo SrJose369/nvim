@@ -16,12 +16,29 @@ return {
 			event = "VeryLazy",
 			opts = {},
 			enabled = vim.fn.has("nvim-0.10.0") == 1,
+		},
+		{
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			lazy = true,
 		}
 	},
 	config = function()
 		require("nvim-treesitter.configs").setup({
-			-- language parsers that MUST be installed
-			ensure_installed = {
+			textobjects = {
+				select = {
+					enable = true,
+					lookahead = true,
+					keymaps = {
+						["af"] = "@function.outer",
+						["if"] = "@function.inner",
+						["al"] = "@class.outer",
+						["il"] = "@class.inner",
+						["ap"] = "@parameter.outer",
+						["ip"] = "@parameter.inner",
+					},
+				},
+			},
+			ensure_installed = { -- language parsers that MUST be installed
 				"bash",
 				"c",
 				"cpp",
@@ -54,8 +71,8 @@ return {
 				keymaps = {
 					init_selection = "<CR>",
 					node_incremental = "<CR>",
+					node_decremental = "<BS>",
 					scope_incremental = "<TAB>",
-					node_decremental = "<S-TAB>",
 				},
 			},
 		})

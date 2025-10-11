@@ -12,11 +12,16 @@ return {
         opts = {},
         config = function()
             local ai = require("mini.ai")
+			if ai == 3 then
+				return
+			end
             ai.setup({
                 custom_textobjects = {
                     b = ai.gen_spec.pair("(", ")"),
                     r = ai.gen_spec.pair("[", "]"),
                     c = ai.gen_spec.pair("{", "}"),
+					-- f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+					-- l = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
                 },
             })
         end,
@@ -82,7 +87,6 @@ return {
                     suffix_last = "l", -- Suffix to search with "prev" method
                     suffix_next = "n", -- Suffix to search with "next" method
                 },
-                n_lines = 20,
                 respect_selection_type = false,
                 search_method = "cover",
                 silent = false,

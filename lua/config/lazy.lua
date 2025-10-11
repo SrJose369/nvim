@@ -30,7 +30,6 @@ require("config.globals")
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
--- vim.cmd("luafile ~/.config/nvim/lua/config/shorcuts.lua")
 
 local plugins_dir = "plugins"
 
@@ -48,44 +47,28 @@ require("lazy").setup({
 	checker = { enabled = true },
 })
 
--- in your init.lua
-vim.api.nvim_create_autocmd("SessionLoadPost", {
-	callback = function()
-		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-			if vim.api.nvim_buf_is_loaded(buf) then
-				-- Force filetype detection
-				vim.api.nvim_buf_call(buf, function()
-					vim.cmd("filetype detect")
-				end)
-			end
-		end
-	end,
-})
-
-
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
-	callback = function(event)
+	callback = function()
 		-- vim.cmd([[hi LspDiagnosticsDefaultError guifg=BrightRed]])
 		-- vim.cmd([[hi LspDiagnosticsDefaultWarning guifg=BrightYellow]])
-		-- vim.cmd([[hi DiagnosticHint guifg=#ffff00]]) para unused vars y cosas asi
+		-- vim.cmd([[hi DiagnosticHint guifg=#ffff00]]) -- para unused vars y cosas asi
 		vim.cmd([[hi DiagnosticWarn guifg=#ffff00]])
 		vim.cmd([[hi NoiceFormatLevelWarn guifg=#f79000]]) -- para el primer mensaje de noice history Warn 19:29:12 notify.warn
 		vim.cmd([[hi NotifyWARNBorder guifg=#f79000]]) -- esto es para los popups de arriba a la derecha
 		vim.cmd([[hi NotifyWARNIcon guifg=#f79000]])
 		vim.cmd([[hi NotifyWARNTitle guifg=#f79000]])
 		vim.cmd([[hi WarningMsg guifg=#f79000]])
+		vim.cmd([[hi Lualine_x_diagnostics_warn_normal guifg=#f79000]])
+		vim.cmd([[hi Visual guibg=#2a2a2a]])
+		vim.cmd([[hi LspReferenceText guibg=#3b4252]])
+
+		-- para que cmp quede transparente, tengo que hacerlo aca, sino queda negro, ademas tengo que setear las 3 cosas
+		-- si no queda negro igual, el fg no importa como es transparente
+		vim.cmd([[hi CmpPmenu guifg=#000000 guibg=NONE blend=0]])
+		-- vim.cmd([[hi CmpPmenuSel guibg=NONE]])
+		vim.cmd([[hi CmpPmenuBorder guifg=#dddddd guibg=NONE blend=0]])
+		vim.cmd([[hi CmpDoc guifg=#000000 guibg=NONE blend=0]])
+		vim.cmd([[hi CmpDocBorder guifg=#dddddd guibg=NONE blend=0]])
 	end,
 })
-
--- vim.api.nvim_create_autocmd("ColorScheme", {
--- 	callback = function()
--- 		-- vim.cmd([[hi LspDiagnosticsDefaultError guifg=BrightRed]])
--- 		-- vim.cmd([[hi LspDiagnosticsDefaultWarning guifg=BrightYellow]])
--- 		vim.cmd([[hi DiagnosticWarn guifg=#ffff00]])
--- 		vim.cmd([[hi NoiceFormatLevelWarn guifg=#f79000]])
--- 		vim.cmd([[hi NotifyWARNBorder guifg=#f79000]])
--- 		vim.cmd([[hi NotifyWARNIcon guifg=#f79000]])
--- 		vim.cmd([[hi NotifyWARNTitle guifg=#f79000]])
--- 	end,
--- })

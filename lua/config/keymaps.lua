@@ -8,7 +8,9 @@ vim.keymap.set("n", "<leader>v", "V", { desc = "V" })
 
 vim.keymap.set("v", "yy", "y", { desc = "Copy selection" })
 vim.keymap.set("v", "yc", '"+y', { desc = "Copy to ClipBoard" })
-vim.keymap.set("n", "yp", '"+p', { desc = "Paste from ClipBoard" })
+vim.keymap.set({"n", "v"}, "yp", '"+p', { desc = "Paste from ClipBoard" })
+vim.keymap.set("n", "yd", '"0p', { desc = "Paste from ClipBoard" })
+vim.keymap.set("n", "yf", '"1p', { desc = "Paste from ClipBoard" })
 
 vim.keymap.set("n", "<A-u>", "<C-d>", { desc = "Page down (centered)" })
 vim.keymap.set("n", "<A-i>", "<C-u>", { desc = "Page down (centered)" })
@@ -76,7 +78,6 @@ vim.keymap.set({"n", "v"}, "<leader>dd", '"_dd', { desc = "Delete line (no yank)
 vim.keymap.set("n", "<leader>la", function() print(vim.fn.expand("%:p")) end, { desc = "Show full path of current file" })
 vim.keymap.set("n", "<leader>lr", function() print(vim.fn.expand("%")) end, { desc = "Show relative path of current file" })
 
-
 vim.keymap.set("n", "<leader>m", function()
 	local api = require("nvim-tree.api")
 	local win = vim.api.nvim_get_current_win()
@@ -104,40 +105,16 @@ vim.keymap.set("n", "<C-m>", function()
 	end
 end, { desc = "Toggle maximize current split" })
 
-vim.keymap.set("n", "<A-o>", function()
-	local bufnr = vim.api.nvim_get_current_buf()
-	vim.cmd("bprevious")
-	vim.cmd("bdelete " .. bufnr)
-end, { desc = "Close buffer and return to previous" })
-
-local buf_history, idx = {}, 0
-local max_history = 50
+local bufhist = require("config.shorcuts")
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
-		local b = vim.fn.bufname("%")
-		if b ~= "" and buf_history[#buf_history] ~= b then
-			table.insert(buf_history, b)
-			-- Trim if over limit
-			if #buf_history > max_history then
-				table.remove(buf_history, 1)
-			end
-			idx = #buf_history
-		end
+		bufhist.push(vim.api.nvim_get_current_buf())
 	end,
 })
-vim.keymap.set("n", "S-h", function()
-	if idx > 1 then
-		idx = idx - 1
-		vim.cmd("edit " .. buf_history[idx])
-	end
-end, { desc = "Back in buffer history" })
-vim.keymap.set("n", "S-l", function()
-	if idx < #buf_history then
-		idx = idx + 1
-		vim.cmd("edit " .. buf_history[idx])
-	end
-	end, { desc = "Forward in buffer history" })
 
+vim.keymap.set("n", "H", bufhist.rotate_right, { desc = "Rotate buffer history right" })
+vim.keymap.set("n", "L", bufhist.rotate_left,  { desc = "Rotate buffer history left" })
+-- vim.keymap.set("n", "<leader>ph", bufhist.print_history,  { desc = "Rotate buffer history left" })
 
 vim.keymap.set("n", "gh", function()
 	local bufnr = vim.api.nvim_get_current_buf()

@@ -51,10 +51,12 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "diff" },
-				lualine_c = {  fun, {
-					"filename",
-					path = 0,
-				} },
+				lualine_c = {  fun,
+					{
+						"filename",
+						path = 0,
+					}
+				},
 				lualine_x = {  "diagnostics" },
 				lualine_y = { "encoding", "fileformat", "filetype" },
 				lualine_z = { "location" },
