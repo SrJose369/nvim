@@ -105,16 +105,7 @@ vim.keymap.set("n", "<C-m>", function()
 	end
 end, { desc = "Toggle maximize current split" })
 
-local bufhist = require("config.shorcuts")
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		bufhist.push(vim.api.nvim_get_current_buf())
-	end,
-})
-
-vim.keymap.set("n", "H", bufhist.rotate_right, { desc = "Rotate buffer history right" })
-vim.keymap.set("n", "L", bufhist.rotate_left,  { desc = "Rotate buffer history left" })
--- vim.keymap.set("n", "<leader>ph", bufhist.print_history,  { desc = "Rotate buffer history left" })
+require("config.shorcuts")
 
 vim.keymap.set("n", "gh", function()
 	local bufnr = vim.api.nvim_get_current_buf()
