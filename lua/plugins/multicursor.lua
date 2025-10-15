@@ -5,12 +5,11 @@ return {
     config = function()
         local mc = require("multicursor-nvim")
         mc.setup()
-        local set = vim.keymap.set
-        set({"n"}, "<A-j>", function() mc.lineAddCursor(1) end)
-        set({"n"}, "<A-k>", function() mc.lineSkipCursor(-1) end)
-        set({"n", "x"}, "<A-n>", function() mc.matchAddCursor(1) end)
-        set({"n", "x"}, "<leader>nx", function() mc.matchSkipCursor(1) end)
-        set({"n", "x"}, "<leader>np", function() mc.matchSkipCursor(-1) end)
+		vim.keymap.set({"n"}, "<A-j>", function() mc.lineAddCursor(1) end, { desc = "Add cursor below" })
+		vim.keymap.set({"n"}, "<A-k>", function() mc.lineSkipCursor(-1) end, { desc = "Skip cursor above" })
+		vim.keymap.set({"n", "x"}, "<A-n>", function() mc.matchAddCursor(1) end, { desc = "Add cursor to next match" })
+		vim.keymap.set({"n", "x"}, "<leader>nx", function() mc.matchSkipCursor(1) end, { desc = "Skip next match" })
+		vim.keymap.set({"n", "x"}, "<leader>np", function() mc.matchSkipCursor(-1) end, { desc = "Skip previous match" })
         -- Add and remove cursors with control + left click.
         -- set("n", "<c-leftmouse>", mc.handleMouse)
         -- set("n", "<c-leftdrag>", mc.handleMouseDrag)
@@ -21,7 +20,7 @@ return {
             layerSet({"n", "x"}, "<left>", mc.prevCursor)
             layerSet({"n", "x"}, "<right>", mc.nextCursor)
             layerSet({"n", "x"}, "np", mc.deleteCursor)
-            layerSet("n", "<esc>", function()
+            layerSet("n", "<Esc>", function()
                 if not mc.cursorsEnabled() then
                     mc.enableCursors()
                 else

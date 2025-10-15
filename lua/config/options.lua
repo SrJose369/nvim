@@ -111,13 +111,3 @@ vim.opt.foldlevel = 99                               -- Keep all folds open by d
 -- Split Behavior
 vim.opt.splitbelow = true -- Horizontal splits open below
 vim.opt.splitright = true -- Vertical splits open to the right
-
--- Add extra fold queries for TypeScript at runtime
-local ts_query = vim.treesitter.query
-local ok, default = pcall(ts_query.get, "typescript", "folds")
-if ok and default then
-	local extra = [[
-	(comment) @fold
-  ]]
-	ts_query.set("typescript", "folds", tostring(default) .. "\n" .. extra)
-end

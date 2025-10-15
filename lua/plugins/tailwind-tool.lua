@@ -7,6 +7,7 @@
 
 return {
     "luckasRanarison/tailwind-tools.nvim",
+	enabled = false,
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
     dependencies = {

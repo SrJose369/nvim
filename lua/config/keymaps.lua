@@ -47,7 +47,7 @@ vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position" })
 
 -- Quick config editing
-vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
+-- vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
 
 -- File Explorer
 -- vim.keymap.set("n", "<leader>m", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus on File Explorer" })
@@ -56,14 +56,17 @@ vim.keymap.set("n", "<leader>e", "<Cmd>NvimTreeToggle<CR>", { desc = "Toggle Fil
 vim.keymap.set("n", "<leader>w", "<Cmd>w<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { desc = "close file" })
 vim.keymap.set("n", "<leader>i", "gg=G``zz", { desc = "Indent file" })
-
+vim.keymap.set("n", "<leader><leader>x", "<Cmd>source %<CR>", { desc = "Source current file" })
+vim.keymap.set("v", "<leader><leader>x", ":lua<CR>", { desc = "Execute selected lines" })
 vim.keymap.set("v", "<leader>so", ":sort<CR>", { desc = "Sort selected lines" })
+vim.keymap.set("n", "<leader>oq", ":copen<CR>", { desc = "Open quickfix" })
+vim.keymap.set("n", "}", ":cnext<CR>", { silent = true, desc = "Next quickfix" })
+vim.keymap.set("n", "{", ":cprev<CR>", { silent = true, desc = "Previous quickfix" })
 
 vim.keymap.set("n", "<S-u>", "<C-R>", { desc = "Redo" })
-vim.keymap.set("n", "<C-u>", "u", { desc = "Redo" })
+vim.keymap.set("v", "<C-u>", "u", { desc = "Redo" })
 
-vim.keymap.set("n", "<leader>h", "<Cmd>nohlsearch<CR>", { desc = "Toggle search highlight" })
-
+vim.keymap.set("n", "<leader>hh", "<Cmd>nohlsearch<CR>", { desc = "Toggle search highlight" })
 -- vim.keymap.set("n", "<leader>na", "<cmd>Noice all<CR>", {desc = "Noice Last Message" })
 vim.keymap.set("n", "<leader>nl", "<cmd>Noice last<CR>", {desc = "Noice Last Message" })
 vim.keymap.set("n", "<leader>nh", "<cmd>Noice all<CR>", {desc = "Noice History" })
@@ -72,8 +75,6 @@ vim.keymap.set("n", "<leader>nd", "<cmd>Noice dismiss<CR>", {desc = "Noice Dismi
 vim.keymap.set("n", "<leader>nc", "<cmd>Noice cmdline<CR>", {desc = "Noice Commandline" })
 
 vim.keymap.set({"n", "v"}, "<leader>dd", '"_dd', { desc = "Delete line (no yank)" })
-
--- vim.keymap.set('n', '<leader>fp', ':ProjectFzf<CR>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>la", function() print(vim.fn.expand("%:p")) end, { desc = "Show full path of current file" })
 vim.keymap.set("n", "<leader>lr", function() print(vim.fn.expand("%")) end, { desc = "Show relative path of current file" })
@@ -91,7 +92,7 @@ vim.keymap.set("n", "<leader>m", function()
 end, { desc = "Toggle focus between editor and NvimTree" })
 
 -- Toggle maximize current split with <C-m>
-vim.keymap.set("n", "<C-m>", function()
+vim.keymap.set("n", "<C-¿>", function()
 	if vim.t.maximized then
 		-- restore previous view
 		vim.cmd(vim.t.maximized_cmd)
@@ -111,9 +112,9 @@ vim.keymap.set("n", "gh", function()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local line = vim.fn.line('.') - 1
 	local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
-
+	local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+	if #clients == 0 then return end
 	local contents = {}
-
 	-- Build diagnostic lines: icon + code: + message
 	for _, d in ipairs(diagnostics) do
 		local icon = ""
@@ -126,15 +127,13 @@ vim.keymap.set("n", "gh", function()
 		elseif d.severity == vim.diagnostic.severity.HINT then
 			icon = "󰌵 "
 		end
-
 		local tag = d.code or d.source
 		local label = tag and (tag .. ": ") or ""
-
 		table.insert(contents, icon .. label .. d.message)
 	end
-
+	local client = clients[1] -- pick the first attached client
 	-- Request hover info
-	local params = vim.lsp.util.make_position_params()
+	local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
 	vim.lsp.buf_request(bufnr, "textDocument/hover", params, function(err, result, ctx, _)
 		if err then return end
 
@@ -148,10 +147,8 @@ vim.keymap.set("n", "gh", function()
 				vim.list_extend(contents, hover_lines)
 			end
 		end
-
 		if not vim.tbl_isempty(contents) then
 			local float_buf, _ = vim.lsp.util.open_floating_preview(contents, "markdown", { border = "rounded" })
-
 			-- Highlight diagnostics lines
 			for i, d in ipairs(diagnostics) do
 				local hl = "Normal"
@@ -165,7 +162,6 @@ vim.keymap.set("n", "gh", function()
 					hl = "DiagnosticHint"
 				end
 				vim.api.nvim_buf_add_highlight(float_buf, -1, hl, i - 1, 0, -1)
-
 				-- Force the code: prefix to Normal (white)
 				if d.code or d.source then
 					local tag = (d.code or d.source) .. ":"

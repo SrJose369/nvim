@@ -1,0 +1,6 @@
+column_witdh = 180
+indent_type = "Tab"
+indent_width = 4
+quote_style = "AutoPreferDouble"
+line_endings = "Unix"
+call_parentheses = "Always"

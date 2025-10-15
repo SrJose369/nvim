@@ -16,9 +16,9 @@ return {
 			},
 			highlight_mode = "virtual", -- small circles with colour next to the declaration
 		})
-		vim.keymap.set("n", "<leader>op", ":CccPick<CR>", { desc = "Open color picker" })
-		vim.keymap.set("n", "<leader>oc", ":CccConvert<CR>", { desc = "Open color convert" })
-		vim.keymap.set("n", "<leader>oh", ":CccHighlighterToggle<CR>", { desc = "Toggle line highlight" })
+		vim.keymap.set("n", "<leader>op", ":CccPick<CR>", { silent = true, desc = "Open color picker" })
+		vim.keymap.set("n", "<leader>oc", ":CccConvert<CR>", { silent = true, desc = "Open color convert" })
+		vim.keymap.set("n", "<leader>oh", ":CccHighlighterToggle<CR>", { silent = true, desc = "Toggle line highlight" })
 	end,
 
 }

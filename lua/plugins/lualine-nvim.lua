@@ -29,15 +29,17 @@ return {
 	extensions = { "nvim-tree", "fugitive", "quickfix", "lazy" },
 	config = function()
 		local ok, theme = pcall(require, "lualine.themes.carbonfox")
-		if theme and theme.normal and theme.normal.c then
-			theme.normal.c.bg = 'none'
-		elseif (theme and theme.insert and theme.insert.c) then
-			theme.insert.c.bg = 'none'
-		elseif (theme and theme.command and theme.command.c) then
-			theme.command.c.bg = 'none'
-		elseif (theme and theme.terminal and theme.terminal.c) then
-			theme.terminal.c.bg = 'none'
-		else theme = "nightfox"
+		if ok == true then
+			if theme and theme.normal and theme.normal.c then
+				theme.normal.c.bg = 'none'
+			elseif (theme and theme.insert and theme.insert.c) then
+				theme.insert.c.bg = 'none'
+			elseif (theme and theme.command and theme.command.c) then
+				theme.command.c.bg = 'none'
+			elseif (theme and theme.terminal and theme.terminal.c) then
+				theme.terminal.c.bg = 'none'
+			else theme = "nightfox" end
+		else theme = "auto"
 		end
 		require("lualine").setup({
 			options = {
@@ -57,7 +59,9 @@ return {
 						path = 0,
 					}
 				},
-				lualine_x = {  "diagnostics" },
+				lualine_x = {  "diagnostics",
+					-- { require("noice").api.status.command.get_hl, cond = require("noice").api.status.command.has, },
+				},
 				lualine_y = { "encoding", "fileformat", "filetype" },
 				lualine_z = { "location" },
 			},

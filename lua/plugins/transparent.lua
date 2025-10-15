@@ -1,43 +1,40 @@
 return {
 	"xiyaowong/transparent.nvim",
+	enabled = true,
 	dependencies = {
 		"hrsh7th/nvim-cmp",
-		-- "savq/melange-nvim",
 		-- "folke/tokyonight.nvim",
-		-- "catppuccin/nvim",
-		-- "rebelot/kanagawa.nvim",
 		-- "rose-pine/neovim",
-		"edeneast/nightfox.nvim",
-		-- "navarasu/onedark.nvim",
-		-- "projekt0n/github-nvim-theme",
-		-- "sainnhe/everforest",
 		-- "mofiqul/vscode.nvim",
-		-- "scottmckendry/cyberdream.nvim",
-		-- "olimorris/onedarkpro.nvim",
-		-- "mofiqul/dracula.nvim",
-		-- "marko-cerovac/material.nvim",
-		lazy = false,
-		priority = 1000,
+		{
+			"edeneast/nightfox.nvim",
+			config = function()
+				require("nightfox").setup({
+					specs = {
+						carbonfox = {
+							diag = {
+								warn = "#f79000",
+							},
+						},
+					},
+					groups = {
+						all = {
+							MatchParen = {fg = "palette.magenta"},
+							LspReferenceText = {bg = "#5a5a5a"},
+						},
+					},
+				})
+			end
+		},
 	},
 	config = function()
 		vim.cmd("colorscheme carbonfox")
+		vim.cmd([[hi NormalFloat guifg=#d4d6d8 guibg=NONE blend=0]])
+		vim.cmd([[hi FloatBorder guibg=NONE blend=0]])
 		require("transparent").setup({
 			groups = {
-				-- "CursorLine",
-				-- "CursorLineNr",
-				-- "FloatBorder",
-				-- "GitSignsAdd",
-				-- "GitSignsChange",
-				-- "GitSignsDelete",
-				-- "LineNr",
-				-- "NonText",
-				-- "Normal",
 				"NormalFloat",
-				-- "NormalNC",
 				"NvimTreeNormal",
-				-- "SignColumn",
-				-- "StatusLine",
-				-- "StatusLineNC",
 			},
 			extra_groups = {},
 			exclude_groups = {},

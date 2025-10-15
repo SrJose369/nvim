@@ -24,7 +24,7 @@ return {
 		"hrsh7th/cmp-buffer", -- nvim-cmp source for words from the current buffer
 		"hrsh7th/cmp-path", -- nvim-cmp source for filesystem paths
 		"hrsh7th/cmp-cmdline", -- nvim-cmp source for command line mode
-		"hrsh7th/cmp-nvim-lsp-signature-help", -- function signatures
+		{"hrsh7th/cmp-nvim-lsp-signature-help", enabled=false}, -- function signatures
 	},
 	config = function()
 		local lspkind = require("lspkind")
@@ -35,13 +35,7 @@ return {
 			include = { "all" },
 			paths = "~/.config/nvim/lua/snippets",
 		})
-		-- los colores aca no importna, porque los voy a sobreescribir al inicio lazy.lua para hacerlos transparentes
-		-- CmpPmenuSel si se usan los valores, porque no se remueve el bg
-		vim.api.nvim_set_hl(0, "CmpPmenu",      { bg = "#ff00ff"})
 		vim.api.nvim_set_hl(0, "CmpPmenuSel",   { bg = "#3e4452", fg = "NONE", bold = true })
-		vim.api.nvim_set_hl(0, "CmpPmenuBorder",{ bg = "NONE", fg = "#5c6370" })
-		vim.api.nvim_set_hl(0, "CmpDoc",        { bg = "#0f0ff0" })
-		vim.api.nvim_set_hl(0, "CmpDocBorder",  { bg = "NONE", fg = "#5c6370" })
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources = cmp.config.sources({
@@ -56,7 +50,6 @@ return {
 				}),
 		})
 		cmp.setup({
-			preselect = cmp.PreselectMode.Item,
 			snippet = {
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
@@ -65,17 +58,17 @@ return {
 			window = {
 				completion = cmp.config.window.bordered({
 					border = "rounded",
-					winhighlight = "Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:CmpPmenuSel,Search:None",
+					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
 					scrollbar = false,
 				}),
 				documentation = cmp.config.window.bordered({
 					border = "rounded",
-					winhighlight = "Normal:CmpDoc,FloatBorder:CmpDocBorder",
+					winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
 				}),
 			},
 			formatting = {
 				format = lspkind.cmp_format({
-					before = require("tailwind-tools.cmp").lspkind_format,
+					-- before = require("tailwind-tools.cmp").lspkind_format,
 					mode = "symbol_text",
 					menu = {
 						copilot = "",
@@ -121,12 +114,12 @@ return {
 				-- end, { "i", "s" }),
 			}),
 			sources = {
-				{ name = "copilot" },
+				-- { name = "copilot" },
 				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
 				{ name = "buffer" },
 				{ name = "path" },
-				{ name = "nvim_lsp_signature_help" },
+				-- { name = "nvim_lsp_signature_help" },
 			},
 		})
 	end,
