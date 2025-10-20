@@ -64,7 +64,7 @@ return function(capabilities)
                 docker = { hadolint, prettier_d },
                 go = { gofumpt, go_revive },
                 html = { prettier_d },
-                javascript = { eslint_d, eslint_d },
+                javascript = { eslint_d, prettier_d },
                 javascriptreact = { eslint_d, prettier_d },
                 json = { eslint_d, fixjson },
                 jsonc = { eslint_d, fixjson },

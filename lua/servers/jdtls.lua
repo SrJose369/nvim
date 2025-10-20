@@ -1,9 +1,11 @@
 local M = {}
 
+require("colors.java")
+
 M.setup = function()
 	local system_os = ""
 	if vim.fn.has("wsl") == 1 then
-		system_os = "wsl"
+		system_os = "win"
 	elseif vim.fn.has("unix") == 1 then
 		system_os = "linux"
 	elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
@@ -26,6 +28,8 @@ M.setup = function()
 	}
 	vim.list_extend(bundles,
 		vim.split(vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/java-test/extension/server/*.jar", 1), "\n"))
+	local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
+	extendedClientCapabilities.classFileContentsSupport = true
 	local config = {
 		cmd = {
 			-- "/home/jose/.sdkman/candidates/java/21.0.8-tem/bin/java",
@@ -162,7 +166,7 @@ M.setup = function()
 		init_options = {
 			-- References the bundles defined above to support Debugging and Unit Testing
 			bundles = bundles,
-			extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
+			extendedClientCapabilities = extendedClientCapabilities,
 		},
 		-- Needed for debugging
 		on_attach = function(client, bufnr)

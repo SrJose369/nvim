@@ -39,7 +39,7 @@ return {
 				vim.keymap.set("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage Git Buffer" })
 				vim.keymap.set("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset Git Buffer" })
 				vim.keymap.set("n", "<leader>hP", gitsigns.preview_hunk, { desc = "Preview Git Hunk" })
-				vim.keymap.set("n", "<leader>hi", gitsigns.preview_hunk_inline, { desc = "Preview Git Hunk Inline" })
+				-- vim.keymap.set("n", "<leader>hi", gitsigns.preview_hunk_inline, { desc = "Preview Git Hunk Inline" })
 				vim.keymap.set("n", "<leader>hb", function() gitsigns.blame_line({ full = true }) end, { desc = "Blame Git Line" })
 				vim.keymap.set("n", "<leader>ha", gitsigns.diffthis, { desc = "Diff This" })
 				vim.keymap.set("n", "<leader>hd", function() gitsigns.diffthis("~") end, { desc = "Diff This ~" })

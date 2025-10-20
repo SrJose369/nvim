@@ -13,6 +13,24 @@ return {
 	opts = {},
 	config = function()
 		local fzf = require("fzf-lua")
+		fzf.setup({
+			grep = {
+				rg_glob = true,
+				-- pass globs using ripgrep's "-g" flag (you can change to "--iglob" if you want case-insensitive globs)
+				glob_flag = "-g",
+				glob_separator = "  ",
+				rg_opts = table.concat({
+					"--hidden",
+					"--follow",
+					"--line-number",
+					"--column",
+					"--no-heading",
+					"--color=always",
+					"--smart-case",
+					"-F", -- exact (fixed string) match; swap to "-w" or "-x" if desired
+				}, " "),
+			},
+		})
 		local config = fzf.config
 		local actions = fzf.actions
 		vim.keymap.set("n", "<leader>k", function() fzf.keymaps() end, {desc = "Fzf Keymaps"})

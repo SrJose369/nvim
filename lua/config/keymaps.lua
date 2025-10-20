@@ -65,9 +65,15 @@ vim.keymap.set("n", "{", ":cprev<CR>", { silent = true, desc = "Previous quickfi
 
 vim.keymap.set("n", "<S-u>", "<C-R>", { desc = "Redo" })
 vim.keymap.set("v", "<C-u>", "u", { desc = "Redo" })
+vim.keymap.set("n", "zx", "<cmd>normal! zO<CR>", { desc = "Open all folds under cursor" })
 
 vim.keymap.set("n", "<leader>hh", "<Cmd>nohlsearch<CR>", { desc = "Toggle search highlight" })
--- vim.keymap.set("n", "<leader>na", "<cmd>Noice all<CR>", {desc = "Noice Last Message" })
+vim.keymap.set("n", "<leader>na", function()
+	vim.cmd([[Noice all]])
+	vim.defer_fn(function()
+		vim.cmd([[normal! G]])
+	end, 100)
+end, {desc = "Noice Last Message" })
 vim.keymap.set("n", "<leader>nl", "<cmd>Noice last<CR>", {desc = "Noice Last Message" })
 vim.keymap.set("n", "<leader>nh", "<cmd>Noice all<CR>", {desc = "Noice History" })
 vim.keymap.set("n", "<leader>nf", "<cmd>Noice fzf<CR>", {desc = "Noice Fzf" })
@@ -78,6 +84,16 @@ vim.keymap.set({"n", "v"}, "<leader>dd", '"_dd', { desc = "Delete line (no yank)
 
 vim.keymap.set("n", "<leader>la", function() print(vim.fn.expand("%:p")) end, { desc = "Show full path of current file" })
 vim.keymap.set("n", "<leader>lr", function() print(vim.fn.expand("%")) end, { desc = "Show relative path of current file" })
+
+vim.keymap.set("n", "<leader>hi", function()
+	vim.cmd([[Inspect]])
+	vim.defer_fn(function()
+		vim.cmd([[Noice all]])
+		vim.defer_fn(function()
+			vim.cmd([[normal! G]])
+		end, 100)
+	end, 100)
+end, { desc = "Inspect Lua object under cursor" })
 
 vim.keymap.set("n", "<leader>m", function()
 	local api = require("nvim-tree.api")
@@ -92,15 +108,12 @@ vim.keymap.set("n", "<leader>m", function()
 end, { desc = "Toggle focus between editor and NvimTree" })
 
 -- Toggle maximize current split with <C-m>
-vim.keymap.set("n", "<C-¿>", function()
+vim.keymap.set("n", "<C-p>", function()
 	if vim.t.maximized then
-		-- restore previous view
 		vim.cmd(vim.t.maximized_cmd)
 		vim.t.maximized = false
 	else
-		-- save current layout
 		vim.t.maximized_cmd = vim.fn.winrestcmd()
-		vim.cmd("wincmd |")
 		vim.cmd("wincmd _")
 		vim.t.maximized = true
 	end

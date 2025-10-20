@@ -12,7 +12,10 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{ "mason-org/mason.nvim", opts = {} }, -- LSP/DAP/Linter installer & manager
-		"mason-org/mason-lspconfig.nvim",     -- bridges mason.nvim with the lspconfig plugin
+		{
+			"mason-org/mason-lspconfig.nvim", -- bridges mason.nvim with the lspconfig plugin
+			enabled = true,
+		},
 		"hrsh7th/cmp-nvim-lsp",               -- nvim-cmp source for LSP-based completion
 		-- "creativenull/efmls-configs-nvim",    -- Preconfigured EFM Language Server setups
 	},

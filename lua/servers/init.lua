@@ -13,7 +13,6 @@ require("servers.bashls")(capabilities)
 -- require("servers.tailwindcss")(capabilities)
 -- require("servers.solidity_ls_nomicfoundation")(capabilities)
 -- require("servers.efm-langserver")(capabilities)
-require("servers.none-ls")
 
 -- ESLint LSP for diagnostics + code actions
 -- vim.lsp.config("eslint", {
@@ -32,6 +31,8 @@ vim.lsp.enable({
 	-- 'jsonls',
 	'ts_ls',
 	'bashls',
+	-- "null-ls",
+	-- "efm",
 	-- 'clangd',
 	-- 'dockerls',
 	-- 'yamlls',
