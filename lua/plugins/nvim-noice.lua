@@ -19,6 +19,13 @@ return {
 		vim.api.nvim_set_hl(0, "QuickfixIcon",       { fg = "#c678dd", bold = true })
 		require("noice").setup({
 			views = {
+				cmdline_replace = {
+					view = "cmdline",
+					position = { row = "95%", col = "95%" },
+					size = { width = 80, height = "auto" },
+					-- you can keep other formatting defaults; if you want the same
+					-- appearance as your current cmdline_popup, copy its opts here.
+				},
 				cmdline_popup = {
 					position = { row = "35%", col = "50%" },
 					size = { width = 60, height = "auto" },
@@ -137,6 +144,23 @@ return {
 							" ", "{message}"
 						},
 					},
+				},
+				{
+					view = "cmdline",
+					filter = {
+						any = {
+							-- match substitution commands like :s/, :%s/, 1,3s/
+							{ event = "cmdline", find = "^:%s*[0-9,]*s/" },
+							-- match the per-match confirm prompt that often contains "replace"
+							-- Noice may surface that as msg_showcmd or msg_show depending on timing/plugins
+							{ event = "msg_showcmd",  find = "[Rr]eplace" },
+							{ event = "msg_show",     find = "[Rr]eplace with" },
+							{find = "replace with"},
+							-- optional: match other localized or different-wording prompts
+							-- { event = "msg_showcmd", find = "confirm" },
+						},
+					},
+					stop = true,
 				},
 				{
 					view = "mini_cmd",

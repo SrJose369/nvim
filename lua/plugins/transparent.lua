@@ -20,8 +20,10 @@ return {
 					groups = {
 						all = {
 							MatchParen = {fg = "palette.magenta"},
-							LspReferenceText = {bg = "#3535bb"},
+							-- LspReferenceText = {fg="#dddddd", bg = "#3535c8"},
+							LspReferenceText = {fg="#dddddd", bg = "#3535bb"},
 							Visual = {bg = "#555555"},
+							-- Folded = {bg="#342F50"},
 						},
 					},
 				})

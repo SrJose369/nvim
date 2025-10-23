@@ -17,9 +17,10 @@ return {
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	cmd = "Neogen",
 	keys = {
-		{ "<leader>jd", smart_neogen, desc = "Generate doc comment" },
+		-- { "<leader>jd", require("neogen").generate, desc = "Generate doc comment" },
 	},
 	config = function()
+		vim.keymap.set("n", "<leader>jd", require("neogen").generate, { desc = "Generate doc comment" })
 		require("neogen").setup({
 -- 			languages = {
 -- 				typescript = {

@@ -83,6 +83,14 @@ vim.opt.encoding = "UTF-8"             -- Use UTF-8 encoding
 vim.opt.wildmenu = true                -- Enable command-line completion menu
 vim.opt.wildmode = "longest:full,full" -- Completion mode for command-line
 vim.opt.wildignorecase = true          -- Case-insensitive tab completion in commands
+vim.o.ff = "unix"                      -- Use Unix file format
+
+vim.opt.fillchars = {
+  foldopen = "",  -- icon when fold is open
+  foldclose = "", -- icon when fold is closed
+  fold = " ",      -- filler inside the fold column
+  foldsep = " ",   -- separator
+}
 
 vim.opt.foldcolumn = "0"
 
