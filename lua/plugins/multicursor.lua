@@ -1,7 +1,7 @@
 return {
     "jake-stewart/multicursor.nvim",
-    event = "VeryLazy",
     branch = "1.0",
+	event = "BufEnter",
     config = function()
         local mc = require("multicursor-nvim")
         mc.setup()

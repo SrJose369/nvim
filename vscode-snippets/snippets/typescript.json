@@ -1,16 +1,33 @@
 {
-	"Console TS": {
-		"prefix": "cg",
-		"body": ["console.log($1);"],
-		"description": "Log to console"
-	},
-	"For Loop TS": {
-		"prefix": "fi",
+	"If general": {
+		"prefix": "ig",
 		"body": [
-			"for (let $1 = 0; $1 < $2.length; $1++) {",
-			"  $3",
+			"if ($1 === undefined) {",
+			"	msjConsola(TypeMjs.WARNING, \"Err $1 vacio\");",
+			"	return;",
 			"}"
 		],
-		"description": "for loop index"
+		"description": "if general"
+	},
+	"Mensaje warning": {
+		"prefix": "mw",
+		"body": [
+			"msjConsola(TypeMjs.WARNING, $1);"
+		],
+		"description": "mensaje warning"
+	},
+	"Promise catch": {
+		"prefix": "pc",
+		"body": [
+			".catch((reas) => console.log(reas));"
+		],
+		"description": "promise catch"
+	},
+	"Promise warning": {
+		"prefix": "pw",
+		"body": [
+			".catch((reas) => msjConsola(TypeMsj.WARNING, reas));"
+		],
+		"description": "promise warning"
 	}
 }

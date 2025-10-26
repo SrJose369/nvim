@@ -31,30 +31,25 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
-local plugins_dir = "plugins"
-
 require("lazy").setup({
 	spec = {
-		{ import = plugins_dir },
+		{ import = "plugins" },
+		--require("plugins.alpha")
+	},
+	defaults = {
+		lazy = true,
 	},
 	rtp = {
 		disabled_plugins = {
 			"netrw",
 			"netrwPlugin",
+			"gzip",
+			"tarPlugin",
+			"tohtml",
+			"tutor",
+			"zipPlugin",
 		},
 	},
-	-- install = { colorscheme = { "tokyonight-night" } },
-	checker = { enabled = true },
+	-- install = { colorscheme = { "nightfox" } },
+	-- checker = { enabled = true },
 })
-
--- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with( vim.lsp.handlers.hover, { border = "rounded", })
-
--- Disable the built-in floating signature help
-vim.lsp.handlers["textDocument/signatureHelp"] = function() end
-
-local orig = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-	opts = opts or {}
-	opts.border = opts.border or "rounded"
-	return orig(contents, syntax, opts, ...)
-end

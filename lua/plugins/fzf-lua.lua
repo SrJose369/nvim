@@ -7,10 +7,8 @@
 
 return {
 	"ibhagwan/fzf-lua",
-	lazy = false,
+	event = "VeryLazy",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
-	keys = {},
-	opts = {},
 	config = function()
 		local fzf = require("fzf-lua")
 		fzf.setup({
@@ -32,7 +30,6 @@ return {
 			},
 		})
 		local config = fzf.config
-		local actions = fzf.actions
 		vim.keymap.set("n", "<leader>k", function() fzf.keymaps() end, {desc = "Fzf Keymaps"})
 		vim.keymap.set("n", "<leader>fa", function() fzf.builtin() end, {desc = "Fzf Builtin"})
 		vim.keymap.set("n", "<leader>ff", function() fzf.files() end, {desc = "Fzf Files"})
@@ -55,7 +52,7 @@ return {
 			fzf.live_grep({
 				prompt = "grep Packages",
 				cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
-	})
+			})
 		end, {desc = "Fzf grep Packages"})
 		vim.keymap.set("n", "<leader>fP", function()
 			fzf.files({

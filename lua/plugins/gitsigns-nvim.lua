@@ -7,7 +7,7 @@
 
 return {
 	"lewis6991/gitsigns.nvim",
-	opts = {},
+	event = "BufEnter",
 	config = function()
 		require("gitsigns").setup({
 			signcolumn = true,
@@ -16,7 +16,6 @@ return {
 			word_diff = false,
 			on_attach = function(bufnr)
 				local gitsigns = require("gitsigns")
-				-- Navigation
 				vim.keymap.set("n", "<leader>hn", function()
 					if vim.wo.diff then
 						vim.cmd.normal({"]c", bang = true})
@@ -39,7 +38,7 @@ return {
 				vim.keymap.set("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage Git Buffer" })
 				vim.keymap.set("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset Git Buffer" })
 				vim.keymap.set("n", "<leader>hP", gitsigns.preview_hunk, { desc = "Preview Git Hunk" })
-				-- vim.keymap.set("n", "<leader>hi", gitsigns.preview_hunk_inline, { desc = "Preview Git Hunk Inline" })
+				vim.keymap.set("n", "<leader>hI", gitsigns.preview_hunk_inline, { desc = "Preview Git Hunk Inline" })
 				vim.keymap.set("n", "<leader>hb", function() gitsigns.blame_line({ full = true }) end, { desc = "Blame Git Line" })
 				vim.keymap.set("n", "<leader>ha", gitsigns.diffthis, { desc = "Diff This" })
 				vim.keymap.set("n", "<leader>hd", function() gitsigns.diffthis("~") end, { desc = "Diff This ~" })
@@ -51,8 +50,6 @@ return {
 				-- Text object
 				vim.keymap.set({"o", "x"}, "ih", gitsigns.select_hunk, { desc = "Select Hunk text-object" })
 			end,
-			-- vim.keymap.set("n", "<leader>ha", ":Gitsigns preview_hunk_inline<CR>", { desc = "Toogle Git preview hunk inline" })
-			-- vim.keymap.set("n", "<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git Blame" })
 		})
 		vim.opt.foldcolumn = "0"
 	end,

@@ -1,13 +1,16 @@
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
-	opts = function()
+	config = function()
 		local dashboard = require("alpha.themes.dashboard")
 		require("alpha.term")
-		dashboard.section.terminal.command = "cat | " .. vim.fn.stdpath("config") .. "/lua/plugins/logo.sh -m"
+		if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+			dashboard.section.terminal.command = "pwsh -NoLogo -NoProfile -File " .. vim.fn.stdpath("config") .. "/lua/plugins/logo.ps1 -m"
+		else
+			dashboard.section.terminal.command = vim.fn.stdpath("config") .. "/lua/plugins/logo.sh -m"
+		end
 		dashboard.section.terminal.width = 70
 		dashboard.section.terminal.height = 10
-		dashboard.section.terminal.opts.redraw = true
 		dashboard.section.buttons.val = {
 			dashboard.button("i", "  new file", ":ene <BAR> startinsert<CR>"),
 			dashboard.button("r", "  recent files", ":FzfLua oldfiles<CR>"),
@@ -24,9 +27,7 @@ return {
 			dashboard.section.buttons,
 			dashboard.section.footer,
 		}
-		return dashboard
-	end,
-	config = function(_, dashboard)
+		dashboard.section.terminal.opts.redraw = true
 		require("alpha").setup(dashboard.opts)
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "LazyVimStarted",

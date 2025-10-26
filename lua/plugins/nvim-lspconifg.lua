@@ -10,6 +10,7 @@
 
 return {
 	"neovim/nvim-lspconfig",
+	event = "VeryLazy",
 	dependencies = {
 		{ "mason-org/mason.nvim", opts = {} }, -- LSP/DAP/Linter installer & manager
 		{
@@ -19,18 +20,16 @@ return {
 		"hrsh7th/cmp-nvim-lsp",               -- nvim-cmp source for LSP-based completion
 		-- "creativenull/efmls-configs-nvim",    -- Preconfigured EFM Language Server setups
 	},
-	opts = {
-		diagnostics = {
-			float = {
-				border = "rounded",
-			},
-		},
-	},
 	config = function()
 		require("utils.diagnostics")
 		require("servers")
 		require("mason").setup()
 		require("mason-lspconfig").setup({
+			diagnostics = {
+				float = {
+					border = "rounded",
+				},
+			},
 			ensure_installed = {
 				"bashls",
 				"ts_ls",

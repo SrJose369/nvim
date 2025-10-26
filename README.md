@@ -8,3 +8,4 @@ Neovim config
 - Agrege color scheme para typescript y java, quedaron igual que mi conifg de intellij, trate de camibar tema eslint, pero sigue siendo muy lento, solucione el tema de keympas para cmp, tambien los para cmdline. 2025-10-20 11:01:19
 
 - Agrege alpha-nvim para el start screen, quedo bien :). 2025-10-23 17:38:40
+- Cambie a lazy por default se nota la mejora, tarda mucho menos en iniciar nvim, pero para eso hay que  agregar config extra en algunos plugins, snippets agregados, tambien solucione tema de colores en ts. 2025-10-26 12:28:38

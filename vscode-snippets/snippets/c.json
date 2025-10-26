@@ -3,14 +3,5 @@
 		"prefix": "cg",
 		"body": ["printf(\"%s\\n\", \"$1\");"],
 		"description": "Print to console"
-	},
-	"For Loop C": {
-		"prefix": "fi",
-		"body": [
-			"for (int $1 = 0; $1 < $2.length; $1++) {",
-			"  $3",
-			"}"
-		],
-		"description": "Basic for loop"
 	}
 }

@@ -15,13 +15,13 @@ require("servers.bashls")(capabilities)
 -- require("servers.efm-langserver")(capabilities)
 
 -- ESLint LSP for diagnostics + code actions
--- vim.lsp.config("eslint", {
--- 	capabilities = capabilities,
--- 	settings = {
--- 		-- optional: auto-fix on save via LSP
--- 		format = true,
--- 	},
--- })
+vim.lsp.config("eslint", {
+	capabilities = capabilities,
+	settings = {
+		-- optional: auto-fix on save via LSP
+		format = true,
+	},
+})
 
 -- Linters & Formatters
 vim.lsp.enable({
@@ -31,6 +31,7 @@ vim.lsp.enable({
 	-- 'jsonls',
 	'ts_ls',
 	'bashls',
+	"eslint",
 	-- "null-ls",
 	-- "efm",
 	-- 'clangd',

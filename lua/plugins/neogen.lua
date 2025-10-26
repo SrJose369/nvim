@@ -14,13 +14,13 @@ end
 
 return {
 	"danymat/neogen",
+	enabled = false,
 	dependencies = "nvim-treesitter/nvim-treesitter",
-	cmd = "Neogen",
 	keys = {
-		-- { "<leader>jd", require("neogen").generate, desc = "Generate doc comment" },
+		{mode="n", "<leader>jd", function() require("neogen").generate() end, desc = "Generate doc comment" },
 	},
 	config = function()
-		vim.keymap.set("n", "<leader>jd", require("neogen").generate, { desc = "Generate doc comment" })
+		--vim.keymap.set("n", "<leader>jd", require("neogen").generate, { desc = "Generate doc comment" })
 		require("neogen").setup({
 -- 			languages = {
 -- 				typescript = {

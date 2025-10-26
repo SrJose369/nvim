@@ -15,6 +15,7 @@
 
 return {
 	"hrsh7th/nvim-cmp",
+	event = "BufEnter",
 	dependencies = {
 		"onsails/lspkind.nvim", -- Adds VS Code-like pictograms/icons to the completion menu
 		"saadparwaiz1/cmp_luasnip", -- Enables LuaSnip as a source for nvim-cmp autocompletion
@@ -30,8 +31,9 @@ return {
 		local lspkind = require("lspkind")
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-		require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/vscode-snippets" })
 		require("luasnip.loaders.from_lua").lazy_load({ paths = "~/.config/nvim/lua/snippets" })
+		require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.config/nvim/vscode-snippets" })
+		require("luasnip.loaders.from_vscode").load_standalone({ path = "~/.config/nvim/vscode-snippets/a.code-snippets" })
 		vim.api.nvim_set_hl(0, "CmpPmenuSel",   { bg = "#3e4452", fg = "NONE", bold = true })
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline({
@@ -73,10 +75,10 @@ return {
 					-- before = require("tailwind-tools.cmp").lspkind_format,
 					mode = "symbol_text",
 					menu = {
-						copilot = "",
-						luasnip = "",
-						buffer = "",
-						path = "",
+						copilot  = "",
+						luasnip  = "",
+						buffer   = "",
+						path     = "",
 						nvim_lsp = "🅻",
 					},
 				}),

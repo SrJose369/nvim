@@ -10,9 +10,9 @@ return {
 	enabled = false,
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
+	opts = {},
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "neovim/nvim-lspconfig",
     },
-    opts = {},
 }

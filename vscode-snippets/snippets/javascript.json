@@ -1,16 +1,7 @@
 {
-	"Console JS": {
-		"prefix": "cg",
-		"body": ["console.log($1);"],
-		"description": "Log to console"
-	},
-	"For Loop JS": {
-		"prefix": "fi",
-		"body": [
-			"for (let $1 = 0; $1 < $2.length; $1++) {",
-			"  $3",
-			"}"
-		],
-		"description": "for loop index"
+	"Console warn": {
+		"prefix": "cw",
+		"body": ["console.warn($1);"],
+		"description": "console warn"
 	}
 }

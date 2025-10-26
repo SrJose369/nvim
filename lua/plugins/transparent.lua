@@ -1,8 +1,9 @@
 return {
 	"xiyaowong/transparent.nvim",
 	enabled = true,
+	lazy = false,
+	priority = 1000,
 	dependencies = {
-		"hrsh7th/nvim-cmp",
 		-- "folke/tokyonight.nvim",
 		-- "rose-pine/neovim",
 		-- "mofiqul/vscode.nvim",
@@ -23,7 +24,7 @@ return {
 							-- LspReferenceText = {fg="#dddddd", bg = "#3535c8"},
 							LspReferenceText = {fg="#dddddd", bg = "#3535bb"},
 							Visual = {bg = "#555555"},
-							-- Folded = {bg="#342F50"},
+							Folded = {bg="NONE"},
 						},
 					},
 				})

@@ -3,14 +3,5 @@
 		"prefix": "cg",
 		"body": ["System.out.println($1);"],
 		"description": "Print to console"
-	},
-	"For Loop Java": {
-		"prefix": "fi",
-		"body": [
-			"for (int $1 = 0; $1 < $2.length; $1++) {",
-			"  $3",
-			"}"
-		],
-		"description": "for loop index"
 	}
 }

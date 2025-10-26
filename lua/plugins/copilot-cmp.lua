@@ -1,8 +1,6 @@
 return {
     "zbirenbaum/copilot-cmp",
 	enbaled = false,
+	opts = {},
     dependencies = { "zbirenbaum/copilot.lua" },
-    config = function()
-        require("copilot_cmp").setup()
-    end,
 }

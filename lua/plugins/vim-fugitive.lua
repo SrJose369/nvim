@@ -7,4 +7,7 @@
 
 return {
     "tpope/vim-fugitive",
+	cmd = "G",
+	config = function()
+	end
 }

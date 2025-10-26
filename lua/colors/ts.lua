@@ -32,11 +32,14 @@ hi("@keyword.operator.typescript", {fg = P.keyword})
 hi("@keyword.type.typescript", {fg = P.keyword})
 hi("@keyword.typescript", {fg = P.keyword})
 hi("@keyword.function.typescript", {fg = P.keyword})
+hi("@keyword.coroutine.typescript", {fg = P.keyword})
+hi("@keyword.modifier.typescript", {fg = P.keyword})
+hi("@keyword.return.typescript", {fg = P.keyword})
 --
--- hi("@lsp.type.modifier.java", {fg = P.keyword})
+-- hi("@constructor.typescript", {fg = P.keyword})
 hi("@constant.builtin.typescript", {fg = P.keyword})
 hi("@type.builtin.typescript", {fg = P.enum})
--- hi("@variable.builtin.java", {fg = P.keyword})
+-- hi("@variable.builtin.typescript", {fg = P.method_call})
 
 hi("@keyword.exception.typescript", {fg = P.keyword})
 hi("@keyword.conditional.typescript", {fg = P.keyword})
@@ -64,19 +67,14 @@ hi("@lsp.type.namespace.typescript", {fg = "#a6b4c4"})
 hi("@lstp.typemod.member.declaration.typescript", {fg = P.method_decl})
 hi("@lsp.typemod.member.defaultLibrary.typescript", {fg = P.method_decl})
 
--- hi("@lsp.type.annotation.java", {fg = "#bbb529"})
--- hi("@attribute.java", {fg = "#bbb529"})
 hi("@operator.typescript", {fg = P.operator})
 
 hi("@comment.documentation.typescript", {fg = P.doc_comment})
--- hi("@lsp.mod.documentation.java", {fg = P.doc_comment})
 
 hi("@lsp.typemod.variable.defaultLibrary.typescript", {fg = P.method_call})
 hi("@lsp.type.variable.typescript", {fg = P.method_call})
 hi("@lsp.type.parameter.typescript", {fg = P.parameter})
 hi("@lsp.mod.local.typescript", {fg = P.local_variable})
--- hi("@lsp.typemod.keyword.documentation.java", {fg = P.doc_comment, bold = true, italic = true, underline = true})
--- hi("@lsp.typemod.parameter.documentation.java", {fg = "#8a653b"})
 
 -- Tag value #8a653b
 -- Visual #214283

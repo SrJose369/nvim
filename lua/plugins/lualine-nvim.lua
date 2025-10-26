@@ -25,6 +25,7 @@ end
 
 return {
 	"nvim-lualine/lualine.nvim",
+	event = "VeryLazy",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	extensions = { "nvim-tree", "fugitive", "quickfix", "lazy" },
 	config = function()

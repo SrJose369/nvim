@@ -1,0 +1,59 @@
+{
+
+	"Comments done": {
+		"prefix": "d",
+		"body": [
+			"	> HECHO ✅ $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND"
+		],
+		"description": "comments done"
+	},
+	"Comments fixed": {
+		"prefix": "k",
+		"body": [
+			"	> FIXED 🔧 $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND"
+		],
+		"description": "comments done"
+	},
+	"Comments item": {
+		"prefix": "i",
+		"body": [
+			"### $1 _**$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE** $CURRENT_HOUR:$CURRENT_MINUTE:${CURRENT_SECOND}_"
+		],
+		"description": "comments item"
+	},
+	"Comments titulo": {
+		"prefix": "t",
+		"body": [
+			"# **$1**"
+		],
+		"description": "comments titulo"
+	},
+	"Comments wants to do": {
+		"prefix": "w",
+		"body": [
+			"### **(W)** $1 _**$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE** $CURRENT_HOUR:$CURRENT_MINUTE:${CURRENT_SECOND}_"
+		],
+		"description": "comments wants to do"
+	},
+	"Changelog added": {
+		"prefix": "la",
+		"body": [
+			"### <t>Added</t>"
+		],
+		"description": "changelog added"
+	},
+	"Changelog changed": {
+		"prefix": "lc",
+		"body": [
+			"### <t>Changed</t>"
+		],
+		"description": "changelog changed"
+	},
+	"Changelog titulo": {
+		"prefix": "it",
+		"body": [
+			"> ## [$1] $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE"
+		],
+		"description": "changelog titulo"
+	}
+}

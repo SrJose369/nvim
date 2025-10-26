@@ -1,0 +1,45 @@
+{
+	"Console log": {
+		"prefix": "cg",
+		"body": ["console.log($1);"],
+		"description": "Log to console",
+		"scope": "javascript, typescript"
+	},
+	"For loop C": {
+		"prefix": "fi",
+		"body": [
+			"for (int $1 = 0; $1 < $2.length; $1++) {",
+			"  $3",
+			"}"
+		],
+		"description": "for loop index",
+		"scope": "c, java"
+	},
+	"For loop Js": {
+		"prefix": "fi",
+		"body": [
+			"for (let $1 = 0; $1 < $2.length; $1++) {",
+			"  $3",
+			"}"
+		],
+		"description": "for loop index",
+		"scope": "javascript, typescript"
+	},
+	"Java document": {
+		"prefix": "jd",
+		"body": [
+			"@author Jose",
+			"* @since $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE",
+		],
+		"description": "java document",
+		"scope": "java, javascript, typescript"
+	},
+	"Java version": {
+		"prefix": "jv",
+		"body": [
+			"@version **v$1** $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE",
+		],
+		"description": "java version",
+		"scope": "java, javascript, typescript"
+	},
+}
