@@ -91,7 +91,9 @@ return {
 				search_method = "cover",
 				silent = false,
 			})
-			vim.keymap.del("n", "sn")
+			if vim.fn.maparg("sn", "n") ~= "" then
+				vim.keymap.del("n", "sn")
+			end
 		end,
 	},
 	{ "echasnovski/mini.cursorword", version = "*", event="BufEnter", opts = {} },

@@ -11,6 +11,9 @@ return {
 			"edeneast/nightfox.nvim",
 			config = function()
 				require("nightfox").setup({
+					options = {
+						transparent = true
+					},
 					specs = {
 						carbonfox = {
 							diag = {

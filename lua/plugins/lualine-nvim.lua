@@ -31,15 +31,7 @@ return {
 	config = function()
 		local ok, theme = pcall(require, "lualine.themes.carbonfox")
 		if ok == true then
-			if theme and theme.normal and theme.normal.c then
-				theme.normal.c.bg = 'none'
-			elseif (theme and theme.insert and theme.insert.c) then
-				theme.insert.c.bg = 'none'
-			elseif (theme and theme.command and theme.command.c) then
-				theme.command.c.bg = 'none'
-			elseif (theme and theme.terminal and theme.terminal.c) then
-				theme.terminal.c.bg = 'none'
-			else theme = "nightfox" end
+			vim.cmd([[hi StatusLine guibg=NONE]])
 		else theme = "auto"
 		end
 		require("lualine").setup({
